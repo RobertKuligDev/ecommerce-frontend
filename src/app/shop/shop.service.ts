@@ -7,17 +7,17 @@ import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/product';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShopService {
-  baseURL = "https://localhost:44302/api/";
+  baseURL = 'environment.apiUrl';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProduct(shopParams: ShopParams) {
-    let params = new HttpParams;
+    let params = new HttpParams();
     if (shopParams.categoryId != 0) {
-      params = params.append('categoryId', shopParams.categoryId.toString());  
+      params = params.append('categoryId', shopParams.categoryId.toString());
     }
     if (shopParams.search) {
       params = params.append('search', shopParams.search);
@@ -28,19 +28,27 @@ export class ShopService {
     params = params.append('pageNumber', shopParams.pageNumber.toString());
     params = params.append('pageSize', shopParams.pageSize.toString());
 
-    return this.http.get<IPagination>(this.baseURL + 'Products/get-all-products', {observe: 'response', params})
+    return this.http
+      .get<IPagination>(this.baseURL + 'Products/get-all-products', {
+        observe: 'response',
+        params,
+      })
       .pipe(
-        map( response => {
+        map((response) => {
           return response.body;
-        })
-      )
+        }),
+      );
   }
 
   getCategory() {
-    return this.http.get<ICategory[]>(this.baseURL + 'Categories/get-all-categories');
+    return this.http.get<ICategory[]>(
+      this.baseURL + 'Categories/get-all-categories',
+    );
   }
 
   getProductById(id: number) {
-    return this.http.get<IProduct>(this.baseURL + 'Products/get-product-by-id/' + id);
+    return this.http.get<IProduct>(
+      this.baseURL + 'Products/get-product-by-id/' + id,
+    );
   }
 }
