@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IOrder } from '../shared/models/order';
@@ -9,7 +9,7 @@ import { IOrder } from '../shared/models/order';
 })
 export class OrderService {
 
-  baseURL: string = environment.baseURL;
+  baseURL: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -29,5 +29,5 @@ export class OrderService {
   getOrderDetails(id: number): Observable<IOrder> {
     return this.http.get<IOrder>(`${this.baseURL}Orders/get-order-by-id/${id}`);
   }
-  
+
 }

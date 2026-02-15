@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EnvironmentInjector, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-test-error',
@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment.development';
 })
 export class TestErrorComponent implements OnInit {
 
-  baseURL: string = environment.baseURL;
+  baseURL: string = environment.apiUrl;
   validationErrors : any;
   constructor(private http: HttpClient) { }
 
@@ -37,7 +37,7 @@ export class TestErrorComponent implements OnInit {
       error: (err) => console.error(err)
     });
   }
-  
+
   onGet400ValidationError() {
     this.http.get(this.baseURL + 'ErrorLogs/bad-request/three').subscribe({
       next: (next) => console.info(next),
