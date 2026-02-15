@@ -5,12 +5,13 @@ import { ICategory } from '../shared/models/category';
 import { map } from 'rxjs';
 import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/product';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopService {
-  baseURL = 'environment.apiUrl';
+  baseURL = environment.apiUrl ;
 
   constructor(private http: HttpClient) {}
 
