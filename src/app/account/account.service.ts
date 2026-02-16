@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { map, Observable, of, ReplaySubject } from 'rxjs';
 import { IUser } from '../shared/models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { IAddress } from '../shared/models/address';
 export class AccountService {
 
   // Base URL for API requests, derived from environment configuration
-  private _baseURL = environment.baseURL;
+  private _baseURL = environment.apiUrl;
 
   // ReplaySubject to manage the state of the current user
   private currentUser = new ReplaySubject<IUser | null>(1);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development'; // Import environment for API base URL
+import { environment } from '../../environments/environment'; // Import environment for API base URL
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { IDeliveryMethod } from '../shared/models/deliveryMethod'; // Import interface for delivery method
@@ -11,7 +11,7 @@ import { IOrderToCreate } from '../shared/models/order';
 export class CheckoutService {
 
   // Base URL for API calls, coming from environment settings
-  baseURL: string = environment.baseURL;
+  baseURL: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -32,9 +32,8 @@ export class CheckoutService {
     return this.http.get<IDeliveryMethod[]>(this.baseURL + 'Orders/get-delivery-methods').pipe(
       map((res: IDeliveryMethod[]) => {
         // Sorting the delivery methods based on price
-        return res.sort((a, b) => b.price - a.price); 
+        return res.sort((a, b) => b.price - a.price);
       })
     );
   }
 }
-

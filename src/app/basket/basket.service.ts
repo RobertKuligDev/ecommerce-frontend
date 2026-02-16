@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { BehaviorSubject, map } from 'rxjs';
 import { Basket, IBasket, IBasketItem, IBasketTotals } from '../shared/models/basket';
 import { IProduct } from '../shared/models/product';
@@ -19,7 +19,7 @@ export class BasketService {
   /**
    * Base URL for API requests related to the basket.
    */
-  private readonly baseURL: string = environment.baseURL;
+  private readonly baseURL: string = environment.apiUrl;
 
   /**
    * BehaviorSubject tracking the current basket state.
