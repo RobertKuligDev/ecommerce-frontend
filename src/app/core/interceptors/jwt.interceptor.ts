@@ -10,7 +10,7 @@ const refreshTokenSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolea
  * JWT Interceptor with automatic token refresh on 401 responses.
  * Queues requests during token refresh to prevent multiple refresh calls.
  */
-export const jwtInterceptor: HttpHandlerFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+export const jwtInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const tokenService = inject(TokenService);
   const token = tokenService.getAccessToken();
 
