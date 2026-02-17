@@ -5,6 +5,7 @@ import { TestErrorComponent } from './core/test-error/test-error.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { authGuard } from './core/guards/auth.guard';
+import { CustomPreloadingStrategy } from './core/strategies/custom-preloading.strategy';
 
 /**
  * Defines routes for the main application, including lazy-loaded modules and guards.
@@ -19,41 +20,41 @@ const routes: Routes = [
   { path: 'server-error', component: ServerErrorComponent, data: { breadcrumb: 'Server Error' } },
   { path: 'test-error', component: TestErrorComponent, data: { breadcrumb: 'Test Error' } },
 
-  // Lazy-loaded route for Shop module
-  { 
-    path: 'shop', 
+  // Lazy-loaded route for Shop module (preloaded for faster navigation)
+  {
+    path: 'shop',
     loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule),
-    data: { breadcrumb: 'Shop' } 
+    data: { breadcrumb: 'Shop', preload: true }
   },
 
-  // Lazy-loaded route for Basket module
-  { 
-    path: 'basket', 
+  // Lazy-loaded route for Basket module (preloaded for faster navigation)
+  {
+    path: 'basket',
     loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule),
-    data: { breadcrumb: 'Basket' } 
+    data: { breadcrumb: 'Basket', preload: true }
   },
 
-  // Lazy-loaded route for Checkout module with auth guard
-  { 
-    path: 'checkout', 
+  // Lazy-loaded route for Checkout module with auth guard (not preloaded - auth required)
+  {
+    path: 'checkout',
     canActivate: [authGuard],
     loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
-    data: { breadcrumb: 'Checkout' } 
+    data: { breadcrumb: 'Checkout', preload: false }
   },
 
-  // Lazy-loaded route for Account module with breadcrumb skipping
-  { 
-    path: 'account', 
+  // Lazy-loaded route for Account module with breadcrumb skipping (not preloaded - auth required)
+  {
+    path: 'account',
     loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
-    data: { breadcrumb: { skip: true } } 
+    data: { breadcrumb: { skip: true }, preload: false }
   },
 
-  // Lazy-loaded route for Orders module with auth guard
-  { 
-    path: 'orders', 
+  // Lazy-loaded route for Orders module with auth guard (not preloaded - auth required)
+  {
+    path: 'orders',
     canActivate: [authGuard],
     loadChildren: () => import('./order/order.module').then(m => m.OrderModule),
-    data: { breadcrumb: 'Orders' } 
+    data: { breadcrumb: 'Orders', preload: false }
   },
 
   // Wildcard route redirects to Not Found page for unknown paths
@@ -61,11 +62,12 @@ const routes: Routes = [
 ];
 
 /**
- * AppRoutingModule sets up the main application routes.
+ * AppRoutingModule sets up the main application routes with custom preloading strategy.
  */
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: CustomPreloadingStrategy
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
