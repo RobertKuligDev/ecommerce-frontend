@@ -70,13 +70,10 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.accountService.login(this.loginForm.value).subscribe({
         next: () => {
-          this.router.navigateByUrl(this.returnUrl); // Navigate to the returnUrl after successful login
-          console.log('Login successful', this.loginForm.value); // Log message on successful login
+          this.router.navigateByUrl(this.returnUrl);
         },
-        error: (err) => console.error('Login failed', err), // Log error if login fails
+        error: () => {} // Error handling is done by the interceptor and ToastrService
       });
     }
   }
 }
-
-
