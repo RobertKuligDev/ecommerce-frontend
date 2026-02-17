@@ -30,7 +30,7 @@ export class ShopService {
     params = params.append('pageSize', shopParams.pageSize.toString());
 
     return this.http
-      .get<IPagination>(this.baseURL + 'Products/get-all-products', {
+      .get<IPagination>(this.baseURL + 'Products', {
         observe: 'response',
         params,
       })
@@ -43,13 +43,13 @@ export class ShopService {
 
   getCategory() {
     return this.http.get<ICategory[]>(
-      this.baseURL + 'Categories/get-all-categories',
+      this.baseURL + 'Categories',
     );
   }
 
   getProductById(id: number) {
     return this.http.get<IProduct>(
-      this.baseURL + 'Products/get-product-by-id/' + id,
+      this.baseURL + 'Products/' + id,
     );
   }
 }

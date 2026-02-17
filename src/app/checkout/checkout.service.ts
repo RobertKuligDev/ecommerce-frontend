@@ -21,7 +21,7 @@ export class CheckoutService {
    * @returns An observable of the created order.
    */
   createOrder(order: IOrderToCreate) {
-    return this.http.post(`${this.baseURL}Orders/create-order`, order);
+    return this.http.post(`${this.baseURL}Orders`, order);
   }
 
   /**
@@ -29,7 +29,7 @@ export class CheckoutService {
    * @returns An observable containing a sorted list of delivery methods.
    */
   getDeliveryMethods() {
-    return this.http.get<IDeliveryMethod[]>(this.baseURL + 'Orders/get-delivery-methods').pipe(
+    return this.http.get<IDeliveryMethod[]>(this.baseURL + 'Orders/delivery-methods').pipe(
       map((res: IDeliveryMethod[]) => {
         // Sorting the delivery methods based on price
         return res.sort((a, b) => b.price - a.price);

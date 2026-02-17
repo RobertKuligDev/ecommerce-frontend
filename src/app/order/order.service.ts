@@ -18,7 +18,7 @@ export class OrderService {
    * @returns An observable of the user's orders as an array of IOrder objects.
    */
   getOrdersForUser(): Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(`${this.baseURL}Orders/get-orders-for-user`);
+    return this.http.get<IOrder[]>(`${this.baseURL}Orders/user`);
   }
 
   /**
@@ -27,7 +27,7 @@ export class OrderService {
    * @returns An observable of the specified order as an IOrder object.
    */
   getOrderDetails(id: number): Observable<IOrder> {
-    return this.http.get<IOrder>(`${this.baseURL}Orders/get-order-by-id/${id}`);
+    return this.http.get<IOrder>(`${this.baseURL}Orders/${id}`);
   }
 
 }

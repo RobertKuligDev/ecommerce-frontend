@@ -32,7 +32,7 @@ export class AccountService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<IUser>(`${this._baseURL}Accounts/get-current-user`, { headers }).pipe(
+    return this.http.get<IUser>(`${this._baseURL}Accounts/current`, { headers }).pipe(
       map((user: IUser) => {
         if (user) {
           this.currentUser.next(user);
@@ -105,20 +105,20 @@ export class AccountService {
    * Checks if an email address is already registered.
    */
   checkEmailExist(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this._baseURL}Accounts/check-email-exist?email=${email}`);
+    return this.http.get<boolean>(`${this._baseURL}Accounts/email-exists?email=${email}`);
   }
 
   /**
    * Retrieves the user's saved address from the server.
    */
   getUserAddress(): Observable<IAddress> {
-    return this.http.get<IAddress>(`${this._baseURL}Accounts/get-user-address`);
+    return this.http.get<IAddress>(`${this._baseURL}Accounts/address`);
   }
 
   /**
    * Updates the user's address on the server.
    */
   updateUserAddress(address: IAddress): Observable<IAddress> {
-    return this.http.put<IAddress>(`${this._baseURL}Accounts/update-user-address`, address);
+    return this.http.put<IAddress>(`${this._baseURL}Accounts/address`, address);
   }
 }

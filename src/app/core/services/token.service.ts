@@ -75,7 +75,7 @@ export class TokenService {
 
     this.isRefreshing$.next(true);
 
-    return this.http.post<ITokenPair>(`${this.apiUrl}accounts/refresh`, { refreshToken })
+    return this.http.post<ITokenPair>(`${this.apiUrl}Accounts/refresh`, { refreshToken })
       .pipe(
         tap(tokens => this.setTokens(tokens)),
         catchError(error => {

@@ -138,7 +138,7 @@ export class BasketService {
    * @returns An observable of the basket.
    */
   getBasket(id: string) {
-    return this.http.get<IBasket>(`${this.baseURL}Baskets/get-basket-item/${id}`).pipe(
+    return this.http.get<IBasket>(`${this.baseURL}Baskets/${id}`).pipe(
       map((basket) => {
         this.basketSource.next(basket);
         this.shipping = basket.shippingPrice ?? 0;
@@ -152,7 +152,7 @@ export class BasketService {
    * @param basket The basket to save.
    */
   setBasket(basket: IBasket): void {
-    this.http.post<IBasket>(`${this.baseURL}Baskets/update-basket`, basket).subscribe({
+    this.http.post<IBasket>(`${this.baseURL}Baskets`, basket).subscribe({
       next: (updatedBasket) => {
         this.basketSource.next(updatedBasket);
         this.calculateTotals();
@@ -169,7 +169,7 @@ export class BasketService {
    * @param basketId The basket ID to delete.
    */
   deleteBasket(basketId: string): void {
-    this.http.delete(`${this.baseURL}Baskets/delete-basket-item/${basketId}`).subscribe({
+    this.http.delete(`${this.baseURL}Baskets/${basketId}`).subscribe({
       next: () => {
         this.clearBasket();
         this.toastr.success('Basket deleted successfully', 'Success');
