@@ -188,12 +188,8 @@ export class CheckoutPaymentComponent implements AfterViewInit, OnDestroy {
    */
   private updateCardError(event: {
     complete: boolean;
-    elementType: any; error?: { message: string } 
+    elementType: any; error?: { message: string }
 }) {
-    // Log the event for debugging purposes
-    console.log(event);
-
-    // Update the card error message if an error exists
     this.cardError = event.error ? event.error.message : null;
 
     // Update the validity status for the specific card field

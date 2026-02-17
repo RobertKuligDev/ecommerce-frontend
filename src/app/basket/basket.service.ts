@@ -200,14 +200,13 @@ export class BasketService {
     const basketId = this.getCurrentBasketValue()?.id;
 
     if (!basketId) {
-      console.error('Basket ID is missing!');
+      this.toastr.error('Basket ID is missing', 'Error');
       return;
     }
 
     return this.http.post<IBasket>(`${this.baseURL}Payments/${basketId}`, {}).pipe(
       map((basket: IBasket) => {
         this.basketSource.next(basket);
-        console.log('Updated Basket:', this.getCurrentBasketValue());
       })
     );
   }

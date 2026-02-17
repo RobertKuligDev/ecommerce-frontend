@@ -84,10 +84,9 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       this.accountService.register(this.registerForm.value).subscribe({
         next: () => {
-          this.router.navigateByUrl('/shop'); // Navigate to the shop page after successful registration
-          console.log('Registration successful', this.registerForm.value); // Log message on successful registration
+          this.router.navigateByUrl('/shop');
         },
-        error: (err) => console.error('Registration failed', err), // Log error if registration fails
+        error: () => {} // Error handling is done by the interceptor and ToastrService
       });
     }
   }

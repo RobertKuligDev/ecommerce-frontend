@@ -9,11 +9,11 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss'],
-  providers: [{ provide: CdkStepper, useExisting: StepperComponent }] // Providing CdkStepper for step management
+  providers: [{ provide: CdkStepper, useExisting: StepperComponent }]
 })
 export class StepperComponent extends CdkStepper implements OnInit {
 
-  @Input() linearModeSelected: boolean = true; // Determines if the stepper should be linear
+  @Input() linearModeSelected: boolean = true;
 
   /**
    * Initializes the stepper with the selected linear mode.
@@ -28,6 +28,5 @@ export class StepperComponent extends CdkStepper implements OnInit {
    */
   onClick(index: number) {
     this.selectedIndex = index;
-    console.log(this.selectedIndex);
   }
 }
