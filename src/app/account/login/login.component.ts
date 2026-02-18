@@ -34,23 +34,22 @@ export class LoginComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.email  // Use Validators.email for better email validation
+          Validators.email
         ],
-      ], // Form control for email with required validator
+      ],
       password: [
         '',
         [
-          Validators.required,
-          Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$')
+          Validators.required
         ],
-      ], // Form control for password with required validator
+      ],
     });
     this.returnUrl = '';
   }
 
   // Lifecycle hook called on component initialization.
   ngOnInit(): void {
-    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/shop'; // Removed incorrect dot before ['returnUrl']
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/shop';
   }
 
   // Getter methods for form controls
