@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  
+  <!-- Image icon outline -->
+  <rect x="100" y="75" width="200" height="150" fill="none" stroke="#dee2e6" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Mountain shape -->
+  <path d="M150 175 L200 125 L250 175 Z" fill="#e9ecef"/>
+  <path d="M180 175 L220 135 L260 175 Z" fill="#dee2e6"/>
+  
+  <!-- Sun/Circle -->
+  <circle cx="280" cy="100" r="15" fill="#ffc107"/>
+  
+  <!-- Text -->
+  <text x="200" y="250" font-family="Arial, sans-serif" font-size="14" fill="#6c757d" text-anchor="middle">Brak zdjęcia produktu</text>
+</svg>

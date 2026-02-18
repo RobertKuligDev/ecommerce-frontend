@@ -1,5 +1,19 @@
 <div class="card h-100 shadow-sm">
-    <img src="{{product?.productPicture}}" alt="{{product?.name}}" class="img-responsive">
+  <div class="position-relative" style="height: 200px; overflow: hidden; background-color: #f8f9fa;">
+    <img 
+      [src]="product?.productPicture && product?.productPicture !== 'https://' && product?.productPicture !== ''
+           ? product?.productPicture 
+           : 'assets/images/placeholder-product.svg'" 
+      alt="{{product?.name}}" 
+      class="img-fluid w-100 h-100"
+      style="object-fit: cover;"
+      (error)="onImageError($event)">
+    <div *ngIf="!product?.productPicture || product?.productPicture === 'https://' || product?.productPicture === ''" 
+         class="position-absolute top-50 start-50 translate-middle text-muted">
+      <i class="fa fa-image fa-3x"></i>
+      <p class="mt-2 small">Brak zdjęcia</p>
+    </div>
+  </div>
     <div class="card-body">
         <a routerLink="/shop/{{product?.id}}">
             <p class="text-uppercase">{{product?.name}}</p>

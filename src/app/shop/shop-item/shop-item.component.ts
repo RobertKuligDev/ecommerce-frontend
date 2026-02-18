@@ -24,4 +24,11 @@ export class ShopItemComponent implements OnInit {
       this.toastr.error('Product is undefined', 'Error');
     }
   }
+
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement.src !== window.location.origin + '/assets/images/placeholder-product.svg') {
+      imgElement.src = 'assets/images/placeholder-product.svg';
+    }
+  }
 }
