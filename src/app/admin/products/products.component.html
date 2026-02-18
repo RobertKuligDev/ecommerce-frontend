@@ -1,0 +1,118 @@
+<app-admin-layout>
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-900">Products Management</h2>
+    <button (click)="openForm()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="20" height="20"
+        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 5l0 14" />
+        <path d="M5 12l14 0" />
+      </svg>
+      Add Product
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-12">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div *ngIf="!loading" class="bg-white rounded-lg shadow-md overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let product of products">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <img [src]="product.productPicture && product.productPicture !== 'https://' ? product.productPicture : 'assets/images/placeholder-product.svg'"
+              alt="{{ product.name }}" class="h-16 w-16 object-cover rounded"
+              (error)="onImageError($event)" />
+          </td>
+          <td class="px-6 py-4">
+            <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>
+            <div class="text-sm text-gray-500 truncate max-w-xs">{{ product.description }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ product.categoryName }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ product.price | number: '1.2-2' }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <button (click)="openForm(product)" class="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
+            <button (click)="deleteProduct(product.id)" class="text-red-600 hover:text-red-900">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="products.length === 0">
+          <td colspan="5" class="px-6 py-4 text-center text-gray-500">No products found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal Form -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-gray-900">{{ editingProduct ? 'Edit Product' : 'Add Product' }}</h3>
+        <button (click)="closeForm()" class="text-gray-500 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M18 6l-12 12" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form (ngSubmit)="saveProduct()">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Product Name *</label>
+          <input type="text" [(ngModel)]="formModel.name" name="name" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600" />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+          <textarea [(ngModel)]="formModel.description" name="description" rows="3"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Price *</label>
+          <input type="number" step="0.01" [(ngModel)]="formModel.price" name="price" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600" />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Image URL</label>
+          <input type="text" [(ngModel)]="formModel.productPicture" name="productPicture"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600" />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Category</label>
+          <select [(ngModel)]="formModel.categoryName" name="categoryName"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+            <option *ngFor="let cat of categories" [value]="cat.name">{{ cat.name }}</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" (click)="closeForm()"
+            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Cancel</button>
+          <button type="submit"
+            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-admin-layout>
