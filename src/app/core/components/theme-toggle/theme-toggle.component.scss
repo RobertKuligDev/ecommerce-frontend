@@ -1,11 +1,22 @@
-button {
+.theme-toggle-btn {
   transition: all 0.3s ease;
+  color: inherit;
   
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1) rotate(15deg);
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
   }
   
   i {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+  }
+}
+
+[data-bs-theme="dark"] .theme-toggle-btn {
+  color: #fff;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 }
