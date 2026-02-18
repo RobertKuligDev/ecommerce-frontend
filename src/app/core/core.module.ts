@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
+import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 
 /**
  * CoreModule is responsible for providing core components and services.
@@ -20,7 +21,8 @@ import { SharedModule } from '../shared/shared.module';
     TestErrorComponent,        // Component to test error handling
     NotFoundComponent,         // Component displayed for 404 errors
     ServerErrorComponent,      // Component displayed for server errors
-    SectionHeaderComponent     // Component for displaying section headers with breadcrumbs
+    SectionHeaderComponent,    // Component for displaying section headers with breadcrumbs
+    ThemeToggleComponent       // Component for dark/light theme toggle
   ],
   imports: [
     CommonModule,              // Import CommonModule to use common Angular directives
@@ -36,7 +38,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   exports: [
     NavBarComponent,           // Export NavBarComponent to use it outside of CoreModule
-    SectionHeaderComponent     // Export SectionHeaderComponent for breadcrumb usage
+    SectionHeaderComponent,    // Export SectionHeaderComponent for breadcrumb usage
+    ThemeToggleComponent       // Export ThemeToggleComponent for use in other modules
   ]
 })
 export class CoreModule { }

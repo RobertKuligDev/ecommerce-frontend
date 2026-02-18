@@ -1,0 +1,8 @@
+<button 
+  (click)="toggleTheme()" 
+  type="button"
+  class="btn btn-outline-secondary"
+  title="Toggle dark/light mode">
+  <i class="{{ isDarkMode ? 'fa fa-sun' : 'fa fa-moon' }}"></i>
+  <span class="d-none d-md-inline ms-1">{{ isDarkMode ? 'Light' : 'Dark' }}</span>
+</button>

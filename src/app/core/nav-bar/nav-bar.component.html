@@ -31,19 +31,25 @@
   </ul>
 
   <!-- User Section -->
-  <div class="d-flex flex-wrap align-items-center">
+  <div class="d-flex flex-wrap align-items-center gap-2">
+    <!-- Theme Toggle -->
+    <app-theme-toggle></app-theme-toggle>
+    
+    <!-- Shopping Cart -->
     <a routerLink="/basket">
       <i class="fa fa-shopping-cart text-dark fa-2x" style="margin-right: 30px"></i>
       <div class="card-number" *ngIf="basket$ | async as basket">
         {{ basket.basketItems.length }}
       </div>
     </a>
+    
+    <!-- Auth Buttons -->
     <div *ngIf="(currentUser$ | async) === null">
       <a routerLink="/account/login" class="btn btn-outline-danger me-2">Login</a>
       <a routerLink="/account/register" class="btn btn-danger">Sign-up</a>
     </div>
     <div *ngIf="currentUser$ | async as user">
-      <div class="btn-group ml-3 mr-5" dropdown>
+      <div class="btn-group ms-3 me-5" dropdown>
         <a id="button-basic" dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic" style="text-decoration: none; cursor: pointer" *ngIf="user?.displayName">
           <span class="caret" style="font-weight: bold">Welcome, {{ user.displayName }}</span>
         </a>
