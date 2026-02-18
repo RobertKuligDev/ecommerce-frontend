@@ -1,8 +1,8 @@
 <button
   (click)="toggleTheme()"
   type="button"
-  class="btn btn-link nav-link px-2 theme-toggle-btn"
+  class="btn btn-outline-primary theme-toggle-btn"
   title="Toggle dark/light mode"
-  style="border: none; font-size: 1.2rem;">
-  <i class="{{ isDarkMode ? 'fa fa-sun' : 'fa fa-moon' }}"></i>
+  style="min-width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+  <i class="{{ isDarkMode ? 'fa fa-sun' : 'fa fa-moon' }}" style="font-size: 1.2rem;"></i>
 </button>
