@@ -19,6 +19,7 @@ export interface IOrder {
     subtotal: number;                // Total cost before shipping
     total: number;                   // Total cost including shipping
     orderStatus: string;             // Current status of the order (e.g., "Pending", "Shipped")
+    status?: string;                 // Alias for orderStatus (for compatibility)
 }
 
 // Interface to represent individual items in an order
