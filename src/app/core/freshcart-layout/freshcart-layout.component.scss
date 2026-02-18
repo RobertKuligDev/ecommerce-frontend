@@ -1,0 +1,29 @@
+// FreshCart Layout Styles
+.nav-link.active {
+  color: #16d012 !important;
+  font-weight: 600;
+}
+
+.dropdown-menu {
+  z-index: 1050;
+}
+
+.offcanvas-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 300px;
+  z-index: 1045;
+  background-color: white;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 992px) {
+  .offcanvas-left {
+    position: static;
+    height: auto;
+    width: auto;
+    box-shadow: none;
+  }
+}
