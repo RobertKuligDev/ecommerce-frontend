@@ -49,9 +49,15 @@
               "./node_modules/bootswatch/dist/journal/bootstrap.min.css",
               "./node_modules/ngx-toastr/toastr.css",
               "./node_modules/ngx-spinner/animations/ball-spin-fade.css",
+              "./node_modules/tiny-slider/dist/tiny-slider.css",
+              "./node_modules/swiper/swiper-bundle.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/tiny-slider/dist/min/tiny-slider.js",
+              "./node_modules/swiper/swiper-bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {

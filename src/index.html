@@ -2,15 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Client</title>
+  <title>FreshCart - Online Grocery Shopping</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tiny Slider CSS -->
+  <link href="node_modules/tiny-slider/dist/tiny-slider.css" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link href="node_modules/swiper/swiper-bundle.min.css" rel="stylesheet">
 </head>
 <body>
   <app-root></app-root>
-  
+
   <!-- Include Stripe.js for payment processing -->
   <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Tiny Slider -->
+  <script src="node_modules/tiny-slider/dist/min/tiny-slider.js"></script>
+
+  <!-- Swiper JS -->
+  <script src="node_modules/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper Sliders -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hero Slider
+      if (document.getElementById('heroSwiper')) {
+        new Swiper('#heroSwiper', {
+          loop: true,
+          speed: 400,
+          spaceBetween: 100,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          autoplay: {
+            delay: 3000,
+          },
+          effect: 'fade',
+          breakpoints: {
+            480: { slidesPerView: 1 },
+            768: { slidesPerView: 1 },
+            1024: { slidesPerView: 1 }
+          }
+        });
+      }
+
+      // Category Slider
+      if (document.getElementById('categorySwiper')) {
+        new Swiper('#categorySwiper', {
+          loop: true,
+          speed: 400,
+          spaceBetween: 20,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          autoplay: {
+            delay: 3000,
+          },
+          breakpoints: {
+            480: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 6 }
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
