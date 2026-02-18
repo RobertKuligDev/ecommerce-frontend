@@ -88,6 +88,58 @@ git push origin develop
 
 ---
 
+### Commit 3: API Endpoint Mapping Update
+**Status**: ⏳ Pending (modified files ready)
+
+**Files Changed**:
+- `src/app/account/account.service.ts`
+- `src/app/basket/basket.service.ts`
+- `src/app/checkout/checkout.service.ts`
+- `src/app/order/order.service.ts`
+- `src/app/shop/shop.service.ts`
+- `src/app/core/services/token.service.ts`
+- `src/app/core/test-error/test-error.component.ts`
+
+**Changes**:
+Updated all API endpoint paths to match the new backend API structure from Swagger documentation:
+
+| Service | Old Path | New Path |
+|---------|----------|----------|
+| AccountService | `Accounts/get-current-user` | `Accounts/current` |
+| AccountService | `Accounts/check-email-exist` | `Accounts/email-exists` |
+| AccountService | `Accounts/get-user-address` | `Accounts/address` |
+| AccountService | `Accounts/update-user-address` | `Accounts/address` |
+| TokenService | `accounts/refresh` | `Accounts/refresh` |
+| BasketService | `Baskets/get-basket-item/{id}` | `Baskets/{id}` |
+| BasketService | `Baskets/update-basket` | `Baskets` |
+| BasketService | `Baskets/delete-basket-item/{basketId}` | `Baskets/{basketId}` |
+| CheckoutService | `Orders/create-order` | `Orders` |
+| CheckoutService | `Orders/get-delivery-methods` | `Orders/delivery-methods` |
+| OrderService | `Orders/get-orders-for-user` | `Orders/user` |
+| OrderService | `Orders/get-order-by-id/{id}` | `Orders/{id}` |
+| ShopService | `Products/get-all-products` | `Products` |
+| ShopService | `Categories/get-all-categories` | `Categories` |
+| ShopService | `Products/get-product-by-id/{id}` | `Products/{id}` |
+| TestErrorComponent | `Products/973` | `products/973` |
+
+**Commit Command**:
+```bash
+git add src/app/account/account.service.ts src/app/basket/basket.service.ts src/app/checkout/checkout.service.ts src/app/order/order.service.ts src/app/shop/shop.service.ts src/app/core/services/token.service.ts src/app/core/test-error/test-error.component.ts
+git commit -m "fix(api): update all endpoint paths to match new backend API structure
+
+- AccountService: update 5 endpoints to new simplified paths
+- BasketService: update 3 endpoints to RESTful paths
+- CheckoutService: update 2 endpoints to match Swagger docs
+- OrderService: update 2 endpoints to simplified paths
+- ShopService: update 3 endpoints to RESTful paths
+- TokenService: fix case sensitivity (accounts → Accounts)
+- TestErrorComponent: fix Products → products case
+- All endpoints now match Swagger documentation at localhost:5000/swagger"
+git push origin develop
+```
+
+---
+
 ### Commit 4: AccountService Refactoring
 **Status**: ✅ Completed
 
@@ -119,32 +171,81 @@ git push origin develop
 ---
 
 ### Commit 5: Security Audit - Console.log Removal
-**Status**: ⏳ Pending
+**Status**: ⏳ Pending (modified files ready)
 
-**Files to Audit**:
-- `src/app/basket/basket.service.ts`
-- `src/app/core/nav-bar/nav-bar.component.ts`
-- `src/app/shared/components/stepper/stepper.component.ts`
-- `src/app/checkout/**/*.ts`
-- `src/app/shop/**/*.ts`
+**Files Changed**:
+- `src/app/checkout/checkout-delivery/checkout-delivery.component.ts` (MODIFIED)
+- `src/app/checkout/checkout.component.ts` (MODIFIED)
+- `src/app/checkout/checkout-review/checkout-review.component.ts` (MODIFIED)
+- `src/app/order/order.component.ts` (MODIFIED)
+- `src/app/order/order-details/order-details.component.ts` (MODIFIED)
+- `src/app/shop/shop.component.ts` (MODIFIED)
+- `src/app/shop/shop-item/shop-item.component.ts` (MODIFIED)
+- `src/app/shop/product-details/product-details.component.ts` (MODIFIED)
 
-**Audit Command**:
+**Changes**:
+Added `ToastrService` to components missing error handling and replaced `console.error` with user-friendly toast notifications:
+
+| Component | Change |
+|-----------|--------|
+| CheckoutDeliveryComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Failed to load delivery methods', 'Error')` |
+| CheckoutComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Failed to load user address', 'Error')` |
+| CheckoutReviewComponent | Replaced `console.error` with `this.toastr.error('Error creating payment intent', 'Error')` |
+| OrderComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Failed to load orders', 'Error')` |
+| OrderDetailsComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Failed to load order details', 'Error')` |
+| ShopComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Failed to load products', 'Error')` |
+| ShopItemComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Product is undefined', 'Error')` |
+| ProductDetailsComponent | Added ToastrService, replaced `console.error` with `this.toastr.error('Product is not available', 'Error')` |
+
+**Note**: `test-error.component.ts` intentionally keeps `console.error` for debugging purposes (it's a test component).
+
+**Commit Command**:
 ```bash
-# Find all console.log statements
-grep -rn "console\." src/app --include="*.ts"
+git add src/app/checkout/checkout-delivery/checkout-delivery.component.ts src/app/checkout/checkout.component.ts src/app/checkout/checkout-review/checkout-review.component.ts src/app/order/order.component.ts src/app/order/order-details/order-details.component.ts src/app/shop/shop.component.ts src/app/shop/shop-item/shop-item.component.ts src/app/shop/product-details/product-details.component.ts
+git commit -m "security: add ToastrService to components missing error handling
+
+- CheckoutDeliveryComponent: add ToastrService for delivery methods error
+- CheckoutComponent: add ToastrService for user address error
+- CheckoutReviewComponent: replace console.error with toastr
+- OrderComponent: add ToastrService for orders loading error
+- OrderDetailsComponent: add ToastrService for order details error
+- ShopComponent: add ToastrService for products loading error
+- ShopItemComponent: add ToastrService for undefined product error
+- ProductDetailsComponent: add ToastrService for null product error
+- Consistent user-friendly error messages across all components
+- Keep console.error only in test-error.component.ts (debugging purpose)"
+git push origin develop
 ```
 
-**Commit Command** (after cleanup):
-```bash
-git add src/app/**/*.ts
-git commit -m "security: remove console.log statements from production code
+---
 
-- Remove debug console.log from BasketService
-- Remove debug logs from NavBarComponent
-- Remove console.log from checkout components
-- Remove debug logs from shop components
-- Prevent potential token/data leakage in production
-- Keep error logging via ToastrService only"
+### Commit 11: Product Image Placeholder Fix
+**Status**: ✅ Completed
+
+**Files Changed**:
+- `src/app/shop/shop-item/shop-item.component.html` (MODIFIED)
+- `src/app/shop/shop-item/shop-item.component.ts` (MODIFIED)
+- `src/assets/images/placeholder-product.svg` (NEW)
+
+**Problem**:
+Backend API returns incomplete image URLs (`"productPicture": "https://"`), causing broken images in product listings.
+
+**Solution**:
+- Added fallback to placeholder SVG image when product picture is missing or invalid
+- Added `onImageError()` method to handle image loading errors gracefully
+- Created placeholder SVG with icon and "Brak zdjęcia produktu" text
+- Conditional display with overlay message when no image available
+
+**Commit Command**:
+```bash
+git add src/app/shop/shop-item/shop-item.component.html src/app/shop/shop-item/shop-item.component.ts src/assets/images/placeholder-product.svg
+git commit -m "fix(shop): add placeholder for products with missing images
+
+- Add fallback to placeholder SVG when productPicture is empty or invalid
+- Add onImageError() handler for graceful error handling
+- Create placeholder-product.svg with icon and 'Brak zdjęcia produktu' text
+- Show overlay message when no image available
+- Fixes backend issue where productPicture returns 'https://' incomplete URL"
 git push origin develop
 ```
 
@@ -304,20 +405,59 @@ git push origin develop
 
 ## API Endpoint Mapping
 
-| Backend Endpoint | Angular Service Method | HTTP Method |
-|-----------------|----------------------|-------------|
-| `/api/accounts/login` | `AccountService.login()` | POST |
-| `/api/accounts/register` | `AccountService.register()` | POST |
-| `/api/accounts/current` | `AccountService.loadCurrentUser()` | GET |
-| `/api/accounts/refresh` | `TokenService.refreshAccessToken()` | POST |
-| `/api/products` | `ShopService.getProduct()` | GET |
-| `/api/products/{id}` | `ShopService.getProductById()` | GET |
-| `/api/baskets/{id}` | `BasketService.getBasket()` | GET |
-| `/api/baskets` | `BasketService.setBasket()` | POST |
-| `/api/orders/user` | `OrderService.getOrdersForUser()` | GET |
-| `/api/orders/{id}` | `OrderService.getOrderDetails()` | GET |
+### Current State (As of 2026-02-18)
+
+The backend API has been updated with new simplified endpoint paths. The frontend currently uses old endpoint paths and requires updates.
+
+**Base URL**: `localhost:5000/api`
+
+### Complete Endpoint Mapping Table
+
+| Service | Old Frontend Path | New Backend Path (Swagger) | HTTP Method | Status |
+|---------|------------------|---------------------------|-------------|--------|
+| **Accounts** |
+| AccountService | `Accounts/get-current-user` | `/api/Accounts/current` | GET | ⏳ To Update |
+| AccountService | `Accounts/login` | `/api/Accounts/login` | POST | ✅ Correct |
+| AccountService | `Accounts/register` | `/api/Accounts/register` | POST | ✅ Correct |
+| AccountService | `Accounts/check-email-exist` | `/api/Accounts/email-exists` | GET | ⏳ To Update |
+| AccountService | `Accounts/get-user-address` | `/api/Accounts/address` | GET | ⏳ To Update |
+| AccountService | `Accounts/update-user-address` | `/api/Accounts/address` | PUT | ⏳ To Update |
+| **Token** |
+| TokenService | `accounts/refresh` | `/api/Accounts/refresh` | POST | ⏳ To Update (case) |
+| **Basket** |
+| BasketService | `Baskets/get-basket-item/{id}` | `/api/Baskets/{id}` | GET | ⏳ To Update |
+| BasketService | `Baskets/update-basket` | `/api/Baskets` | POST | ⏳ To Update |
+| BasketService | `Baskets/delete-basket-item/{basketId}` | `/api/Baskets/{id}` | DELETE | ⏳ To Update |
+| BasketService | `Payments/{basketId}` | `/api/Payments/{basketId}` | POST | ✅ Correct |
+| **Checkout** |
+| CheckoutService | `Orders/create-order` | `/api/Orders` | POST | ⏳ To Update |
+| CheckoutService | `Orders/get-delivery-methods` | `/api/Orders/delivery-methods` | GET | ⏳ To Update |
+| **Orders** |
+| OrderService | `Orders/get-orders-for-user` | `/api/Orders/user` | GET | ⏳ To Update |
+| OrderService | `Orders/get-order-by-id/{id}` | `/api/Orders/{orderId}` | GET | ⏳ To Update |
+| **Products** |
+| ShopService | `Products/get-all-products` | `/api/Products` | GET | ⏳ To Update |
+| ShopService | `Categories/get-all-categories` | `/api/Categories` | GET | ⏳ To Update |
+| ShopService | `Products/get-product-by-id/{id}` | `/api/Products/{id}` | GET | ⏳ To Update |
+| **Test Errors** |
+| TestErrorComponent | `ErrorLogs/server-error` | `/api/ErrorLogs/server-error` | GET | ✅ Correct |
+| TestErrorComponent | `Products/973` | `/api/Products/973` | GET | ⏳ To Update (case) |
+| TestErrorComponent | `ErrorLogs/bad-request` | `/api/ErrorLogs/bad-request` | GET | ✅ Correct |
+| TestErrorComponent | `ErrorLogs/bad-request/three` | `/api/ErrorLogs/bad-request/{id}` | GET | ✅ Correct |
+
+### Files Requiring Updates
+
+1. `src/app/account/account.service.ts` - 5 endpoints to fix
+2. `src/app/core/services/token.service.ts` - 1 endpoint to fix (case sensitivity)
+3. `src/app/basket/basket.service.ts` - 3 endpoints to fix
+4. `src/app/checkout/checkout.service.ts` - 2 endpoints to fix
+5. `src/app/order/order.service.ts` - 2 endpoints to fix
+6. `src/app/shop/shop.service.ts` - 3 endpoints to fix
+7. `src/app/core/test-error/test-error.component.ts` - 1 endpoint to fix (case sensitivity)
 
 ---
+
+## Security Checklist
 
 ## Security Checklist
 
