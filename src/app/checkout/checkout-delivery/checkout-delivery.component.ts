@@ -3,6 +3,7 @@ import { CheckoutService } from '../checkout.service'; // Import service to fetc
 import { IDeliveryMethod } from '../../shared/models/deliveryMethod'; // Import delivery method interface
 import { FormGroup } from '@angular/forms';
 import { BasketService } from '../../basket/basket.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout-delivery',
@@ -17,7 +18,7 @@ export class CheckoutDeliveryComponent implements OnInit {
   // List of delivery methods to be fetched and displayed
   deliveryMethods: IDeliveryMethod[] = [];
 
-  constructor(private checkoutService: CheckoutService, private basketService: BasketService) { }
+  constructor(private checkoutService: CheckoutService, private basketService: BasketService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // Fetch delivery methods from the CheckoutService on component initialization
@@ -28,7 +29,7 @@ export class CheckoutDeliveryComponent implements OnInit {
       },
       error: (err) => {
         // Handle any errors that occur while fetching data
-        console.error(err);
+        this.toastr.error('Failed to load delivery methods', 'Error');
       },
     });
   }

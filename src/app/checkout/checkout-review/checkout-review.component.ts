@@ -34,7 +34,7 @@ export class CheckoutReviewComponent implements OnInit {
         this.appStepper.next();
       },
       error: (err) => {
-        console.error('Error creating payment intent:', err.message);
+        this.toastr.error('Error creating payment intent', 'Error');
       },
     });
   }

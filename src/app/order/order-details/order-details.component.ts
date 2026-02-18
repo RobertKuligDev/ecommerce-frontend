@@ -3,6 +3,7 @@ import { IOrder } from '../../shared/models/order';
 import { OrderService } from '../order.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-details',
@@ -17,7 +18,8 @@ export class OrderDetailsComponent implements OnInit {
     private orderService: OrderService,
     private breadcrumb: BreadcrumbService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     // Setting the breadcrumb label initially as empty
     breadcrumb.set('@OrderDetails', '');
@@ -30,7 +32,7 @@ export class OrderDetailsComponent implements OnInit {
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     const id = idParam ? +idParam : null;
-  
+
     if (id !== null) {
       this.orderService.getOrderDetails(id).subscribe({
         next: (order: IOrder) => {
@@ -38,7 +40,7 @@ export class OrderDetailsComponent implements OnInit {
           this.breadcrumb.set('@OrderDetails', `Order #${order.id} - ${order.orderStatus}`);
         },
         error: (err) => {
-          console.error(err.message);
+          this.toastr.error('Failed to load order details', 'Error');
           this.breadcrumb.set('@OrderDetails', 'Order not found');
           this.router.navigate(['/orders']);
         }

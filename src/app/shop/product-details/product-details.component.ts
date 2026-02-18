@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IProduct } from '../../shared/models/product';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { BasketService } from '../../basket/basket.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,8 @@ export class ProductDetailsComponent implements OnInit {
     private shopService: ShopService,
     private activeRoute: ActivatedRoute,
     private bcService: BreadcrumbService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private toastr: ToastrService
   ) {
     this.bcService.set('@productDetails', '')
   }
@@ -36,9 +38,9 @@ export class ProductDetailsComponent implements OnInit {
 
   addItemToBasket() {
     if (this.product) {
-      this.basketService.addItemToBasket(this.product, this.quantity);      
+      this.basketService.addItemToBasket(this.product, this.quantity);
     } else {
-      console.error("Product is null");
+      this.toastr.error('Product is not available', 'Error');
     }
   }
 
@@ -48,7 +50,7 @@ export class ProductDetailsComponent implements OnInit {
 
   decrementQuantityItem() {
     if (this.quantity > 1) {
-      this.quantity--;      
+      this.quantity--;
     }
   }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IDeliveryMethod } from '../shared/models/deliveryMethod';
 import { AccountService } from '../account/account.service';
 import { BasketService } from '../basket/basket.service';
+import { ToastrService } from 'ngx-toastr';
 
 /**
  * Component for handling the checkout process.
@@ -34,7 +35,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private toastr: ToastrService
   ) {
     // Initialize an empty form group upon component creation
     this.checkoutForm = this.fb.group({});
@@ -92,7 +94,7 @@ export class CheckoutComponent implements OnInit {
         this.checkoutForm.get('addressForm')?.patchValue(address);
       },
       error: (err) => {
-        console.error('Failed to load user address:', err);
+        this.toastr.error('Failed to load user address', 'Error');
       }
     });
   }

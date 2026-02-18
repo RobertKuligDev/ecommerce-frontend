@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IOrder } from '../shared/models/order';
 import { OrderService } from './order.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order',
@@ -11,7 +12,7 @@ export class OrderComponent implements OnInit {
 
   orders: IOrder[] = [];
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService, private toastr: ToastrService) { }
 
   /**
    * Initializes the component and retrieves the list of user orders.
@@ -30,10 +31,10 @@ export class OrderComponent implements OnInit {
         this.orders = orders;
       },
       error: (err) => {
-        console.error(err.message);
+        this.toastr.error('Failed to load orders', 'Error');
       }
     });
   }
-  
+
 }
 
