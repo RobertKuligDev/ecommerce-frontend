@@ -5,6 +5,7 @@ import { TestErrorComponent } from './core/test-error/test-error.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 import { CustomPreloadingStrategy } from './core/strategies/custom-preloading.strategy';
 
 /**
@@ -55,6 +56,14 @@ const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: () => import('./order/order.module').then(m => m.OrderModule),
     data: { breadcrumb: 'Orders', preload: false }
+  },
+
+  // Lazy-loaded route for Admin module with admin guard (admin only)
+  {
+    path: 'admin',
+    canActivate: [adminGuard],
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    data: { breadcrumb: 'Admin Panel', preload: false }
   },
 
   // Wildcard route redirects to Not Found page for unknown paths

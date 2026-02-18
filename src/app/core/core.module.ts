@@ -10,6 +10,8 @@ import { SectionHeaderComponent } from './section-header/section-header.componen
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
 import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
+import { FreshcartLayoutComponent } from './freshcart-layout/freshcart-layout.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /**
  * CoreModule is responsible for providing core components and services.
@@ -22,11 +24,13 @@ import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.com
     NotFoundComponent,         // Component displayed for 404 errors
     ServerErrorComponent,      // Component displayed for server errors
     SectionHeaderComponent,    // Component for displaying section headers with breadcrumbs
-    ThemeToggleComponent       // Component for dark/light theme toggle
+    ThemeToggleComponent,      // Component for dark/light theme toggle
+    FreshcartLayoutComponent   // FreshCart layout with navbar and footer
   ],
   imports: [
     CommonModule,              // Import CommonModule to use common Angular directives
     RouterModule,              // Import RouterModule to enable navigation functionalities
+    ReactiveFormsModule,       // Import ReactiveFormsModule for form handling
     ToastrModule.forRoot({     // Configure ToastrModule for global notifications
       positionClass: 'toast-bottom-right',
       countDuplicates: true,
@@ -39,7 +43,8 @@ import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.com
   exports: [
     NavBarComponent,           // Export NavBarComponent to use it outside of CoreModule
     SectionHeaderComponent,    // Export SectionHeaderComponent for breadcrumb usage
-    ThemeToggleComponent       // Export ThemeToggleComponent for use in other modules
+    ThemeToggleComponent,      // Export ThemeToggleComponent for use in other modules
+    FreshcartLayoutComponent   // Export FreshcartLayoutComponent for use in other modules
   ]
 })
 export class CoreModule { }
