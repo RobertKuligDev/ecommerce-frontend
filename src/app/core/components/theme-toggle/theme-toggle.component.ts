@@ -15,7 +15,7 @@ export class ThemeToggleComponent implements OnInit {
     
     if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
       this.isDarkMode = true;
-      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
     }
   }
 
@@ -23,10 +23,10 @@ export class ThemeToggleComponent implements OnInit {
     this.isDarkMode = !this.isDarkMode;
     
     if (this.isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
       localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
       localStorage.setItem('theme', 'light');
     }
   }
